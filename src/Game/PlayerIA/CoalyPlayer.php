@@ -43,47 +43,65 @@ class CoalyPlayer extends Player
       //print_r($this->result->getChoicesFor($this->mySide));
       //echo($this->result->getChoicesFor($this->mySide)[0]);
 
- 
-
       $nbRound = count($mySide);
 
     
-      $contrary = false;
-      $stats = 0;
-      if ($nbRound > 11)
+      $option = 1;
+      $stats1 = 0;
+      $stats2 = 0;
+      $maxround = 6;
+      if ($nbRound > $maxround + 1)
       {
-        for ($i = 0; $i < 10; $i++)
+        for ($i = 0; $i < $maxround; $i++)
         {
-          $stats += $this->winner($mySide[$nbRound - $i - 1], $opponentSide[$nbRound - $i - 1]);
+          if ($i < $maxround / 2)
+          {
+            $stats1 += $this->winner($mySide[$nbRound - $i - 1], $opponentSide[$nbRound - $i - 1]);
+          }
+          $stats2 += $this->winner($mySide[$nbRound - $i - 1], $opponentSide[$nbRound - $i - 1]);
+          
         }
       }
-      if ($stats < 0)
+      if ($stats1 < 0)
       {
-        $contrary = true;
+        if ($stats2 < 0 and $stats1 > $stats2)
+        {
+          $option = 0;
+        }
+        else
+        {
+          $option = -1;
+        }
       }
         
 
       switch ($this->result->getLastChoiceFor($this->opponentSide)) {
         case "0":          
-          return parent::scissorsChoice();  
+          return parent::rockChoice();  
           break;
         case "paper":
-          if ($contrary)
+          if ($option == -1)
+            return parent::paperChoice();
+          else if ($option == 1)
+            return parent::scissorsChoice();  
+          else
+            return parent::rockChoice();
+          break;
+        case "rock":
+          if ($option == -1)
+            return parent::rockChoice();
+          else if ($option == 1)
             return parent::paperChoice();
           else
             return parent::scissorsChoice();  
           break;
-        case "rock":
-          if ($contrary)
+        case "scissors":
+          if ($option == -1)
+            return parent::scissorsChoice();
+          else if ($option == 1)
             return parent::rockChoice();
           else
-            return parent::paperChoice();  
-          break;
-        case "scissors":
-          if ($contrary)
-            return parent::scissorsChoice();
-          else
-            return parent::rockChoice(); 
+            return parent::paperChoice();
           break;
       }
         // -------------------------------------    -----------------------------------------------------
