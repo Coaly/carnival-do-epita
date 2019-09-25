@@ -69,8 +69,7 @@ class CoalyPlayer extends Player
         // Counter the counter of the counter play (chose the third option)
         if ($stats2 < 0 and $stats1 > $stats2)
         {
-          //$option = 0;
-          $option = -1;
+          $option = 0;
         }
         else
         {
