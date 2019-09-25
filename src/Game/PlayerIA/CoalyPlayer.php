@@ -17,6 +17,21 @@ class CoalyPlayer extends Player
 
     public function getChoice()
     {
+
+      switch ($this->result->getLastChoiceFor($this->opponentSide)) {
+        case "0":
+          return parent::scissorsChoice();  
+          break;
+        case "paper":
+          return parent::scissorsChoice();  
+          break;
+        case "rock":
+          return parent::paperChoice();  
+          break;
+        case "scissors":
+          return parent::rockChoice();  
+          break;
+      }
         // -------------------------------------    -----------------------------------------------------
         // How to get my Last Choice           ?    $this->result->getLastChoiceFor($this->mySide) -- if 0 (first round)
         // How to get the opponent Last Choice ?    $this->result->getLastChoiceFor($this->opponentSide) -- if 0 (first round)
