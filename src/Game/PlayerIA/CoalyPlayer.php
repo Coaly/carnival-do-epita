@@ -15,6 +15,7 @@ class CoalyPlayer extends Player
     protected $opponentSide;
     protected $result;
 
+    // Return 1 for player1 winner, 0 equality, -1 for player2
     private function winner($choice1, $choice2)
     {
       if ($choice1 == $choice2)
@@ -37,19 +38,18 @@ class CoalyPlayer extends Player
 
     public function getChoice()
     {
+      //get data and nb round
       $mySide = $this->result->getChoicesFor($this->mySide);
       $opponentSide = $this->result->getChoicesFor($this->mySide);
-      //echo(count($length));
-      //print_r($this->result->getChoicesFor($this->mySide));
-      //echo($this->result->getChoicesFor($this->mySide)[0]);
-
       $nbRound = count($mySide);
 
     
-      $option = 1;
+
+      // Check strat on the last maxround/2
       $stats1 = 0;
+      // Check strat on the last maxround
       $stats2 = 0;
-      $maxround = 6;
+      $maxround = 4;
       if ($nbRound > $maxround + 1)
       {
         for ($i = 0; $i < $maxround; $i++)
@@ -62,19 +62,24 @@ class CoalyPlayer extends Player
           
         }
       }
+
+      $option = 1;
       if ($stats1 < 0)
       {
+        // Counter the counter of the counter play (chose the third option)
         if ($stats2 < 0 and $stats1 > $stats2)
         {
           $option = 0;
         }
         else
         {
+          // Counter the counter
           $option = -1;
         }
       }
         
 
+      // Chose return value according to option value 
       switch ($this->result->getLastChoiceFor($this->opponentSide)) {
         case "0":          
           return parent::rockChoice();  
