@@ -15,37 +15,51 @@ class CoalyPlayer extends Player
     protected $opponentSide;
     protected $result;
 
+    private function winner($choice1, $choice2)
+    {
+      if ($choice1 == $choice2)
+        return 0;
+      else if ($choice1 == "paper" and $choice2 == "rock")
+        return 1;
+      else if ($choice1 == "paper" and $choice2 == "scissors")
+        return -1;
+      else if ($choice1 == "rock" and $choice2 == "paper")
+        return -1;
+      else if ($choice1 == "rock" and $choice2 == "scissors")
+        return 1;
+      else if ($choice1 == "scissors" and $choice2 == "paper")
+        return 1;
+      else if ($choice1 == "scissors" and $choice2 == "rock")
+        return -1;
+      else
+        return 0;
+    }
+
     public function getChoice()
     {
-
       $mySide = $this->result->getChoicesFor($this->mySide);
       $opponentSide = $this->result->getChoicesFor($this->mySide);
       //echo(count($length));
       //print_r($this->result->getChoicesFor($this->mySide));
       //echo($this->result->getChoicesFor($this->mySide)[0]);
 
+ 
+
       $nbRound = count($mySide);
+
+    
       $contrary = false;
-      if ($nbRound > 4)
+      $stats = 0;
+      if ($nbRound > 11)
       {
-        if ($mySide[$nbRound - 1] == "paper" and $opponentSide[$nbRound - 1] == "rock" and
-            $mySide[$nbRound - 2] == "rock" and $opponentSide[$nbRound - 2] == "paper" and
-            $mySide[$nbRound - 3] == "paper" and $opponentSide[$nbRound - 3] == "rock")
+        for ($i = 0; $i < 2; $i++)
         {
-          $contrary = true;
+          $stats += $this->winner($mySide[$nbRound - $i - 1], $opponentSide[$nbRound - $i - 1]);
         }
-        else if ($mySide[$nbRound - 1] == "paper" and $opponentSide[$nbRound - 1] == "rock" and
-                 $mySide[$nbRound - 2] == "rock" and $opponentSide[$nbRound - 2] == "paper" and
-                 $mySide[$nbRound - 3] == "paper" and $opponentSide[$nbRound - 3] == "rock")
-        {
-          $contrary = true;
-        }
-        else if ($mySide[$nbRound - 1] == "paper" and $opponentSide[$nbRound - 1] == "rock" and
-                 $mySide[$nbRound - 2] == "rock" and $opponentSide[$nbRound - 2] == "paper" and
-                 $mySide[$nbRound - 3] == "paper" and $opponentSide[$nbRound - 3] == "rock")
-        {
-          $contrary = true;
-        }
+      }
+      if ($stats < 0)
+      {
+        $contrary = true;
       }
         
 
