@@ -49,7 +49,7 @@ class CoalyPlayer extends Player
       $stats1 = 0;
       // Check strat on the last maxround
       $stats2 = 0;
-      $maxround = 4;
+      $maxround = 6;
       if ($nbRound > $maxround + 1)
       {
         for ($i = 0; $i < $maxround; $i++)
@@ -69,7 +69,8 @@ class CoalyPlayer extends Player
         // Counter the counter of the counter play (chose the third option)
         if ($stats2 < 0 and $stats1 > $stats2)
         {
-          $option = 0;
+          //$option = 0;
+          $option = -1;
         }
         else
         {
