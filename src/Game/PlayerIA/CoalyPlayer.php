@@ -52,7 +52,7 @@ class CoalyPlayer extends Player
       $stats = 0;
       if ($nbRound > 11)
       {
-        for ($i = 0; $i < 2; $i++)
+        for ($i = 0; $i < 10; $i++)
         {
           $stats += $this->winner($mySide[$nbRound - $i - 1], $opponentSide[$nbRound - $i - 1]);
         }
